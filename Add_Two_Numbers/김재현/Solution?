@@ -1,0 +1,59 @@
+/*
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+참고 사용함
+https://leetcode.com/problems/add-two-numbers/solutions/2987645/c-easy-peasy-solution/?languageTags=cpp
+*/
+
+/*
+int a = b -> val; 관련('->')
+https://stackoverflow.com/questions/9595361/ptr-ptr-next-what-does-this-mean-c
+*/
+
+#include<iostream>
+using namespace std;
+
+struct ListNode { // '리스트 노트' 구조체 설정
+	int val; // 상수값
+	ListNode* next; // 동적 리스트 노드 구조체 생성
+	ListNode() : val(0), next(nullptr) {} // 기본 생성자 - Type 1
+	ListNode(int x) : val(x), next(nullptr) {} // 인트 값 들어왔을 시 생성자 - 2
+	ListNode(int x, ListNode* next) : val(x), next(next) {} // 상수 값, 구조체 들어 왔을시 생성자 - 3
+};
+
+class S {
+public:
+	ListNode* ATN(ListNode* l1, ListNode* l2) {
+		ListNode* head = new ListNode(0); // head 명 구조체에 0 값 대입 = t1, 동적생성자
+		ListNode* ptr = head;
+		int add = 0;
+		int a, b, sum;
+		while (l1 != NULL || l2 != NULL || add != 0) { // l1 이 비어있거나, l2가 비어있거나, add 가 0이 아님
+			if (l1 != NULL) {
+				a = l1->val; // '->' 사용법 모름, 구조체 관련?   => 12번 줄
+				l1 = l1->next;
+			}
+			else{
+				a = 0;
+			}
+
+			if (l2 != NULL) {
+				b = l2->val; // b = (*l2).val; 같은 의미
+				l2 = l2->next;
+			}
+			else {
+				b = 0;
+			}
+			sum = a + b + add;
+			add = sum / 10; // 십의 자리 제거
+			ptr->next = new ListNode(sum % 10);
+			ptr = (*ptr).next;
+		}
+		return head->next;
+	}
+};
+
+int main(void) {
+}
